@@ -16,8 +16,10 @@ public class ReportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_report);
         editTextMachineID = findViewById(R.id.report_machineID);
         editTexterror = findViewById(R.id.report_error);
+
     }
 
     public void sendReport(View V){

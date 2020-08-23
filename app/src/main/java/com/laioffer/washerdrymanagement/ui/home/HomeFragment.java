@@ -72,5 +72,6 @@ public class HomeFragment extends Fragment {
                 swipeContainer.setRefreshing(false);
             }
         });
+
     }
 }

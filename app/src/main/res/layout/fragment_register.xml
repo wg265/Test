@@ -88,17 +88,33 @@
         android:textSize="15sp"
         android:layout_below="@id/et_first_name"/>
 
+    <EditText
+        android:id="@+id/et_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/phone_number"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_centerInParent="true"
+        android:background="@drawable/et_custom"
+        android:textSize="15sp"
+        android:layout_below="@id/et_last_name"/>
+
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/et_last_name"
+        android:layout_below="@id/et_phone_number"
         android:background="@drawable/btn_custom2"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:textColor="@android:color/white"
         android:text="@string/register"/>
+
 
     <ImageView
         android:layout_width="30dp"
@@ -118,3 +134,4 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"/>
 </RelativeLayout>
+

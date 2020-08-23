@@ -8,6 +8,7 @@
     <string name="swipe_left_for_register">Swipe Left for Register</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="phone_number">Phone Number</string>
     <string name="user_id">User ID</string>
     <string name="tag">Help you to manage washer and dryer.</string>
     <string name="swipe_right_for_login">Swipe Right for Login</string>
@@ -17,4 +18,5 @@
     <string name="descripthon">Descripthon</string>
     <string name="machine_id">Machine ID</string>
     <string name="send_report">Send Report</string>
+
 </resources>

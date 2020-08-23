@@ -15,6 +15,7 @@ public interface ApiService {
     Call<RemoteResponse<UserInfo>> login(@Body LoginEvent body);
 
     @POST("register") // need to know exactly
+
     Call<RemoteResponse<UserInfo>> register(@Body RegisterEvent body);
 
 }

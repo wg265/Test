@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.laioffer.washerdrymanagement.R;
 import com.laioffer.washerdrymanagement.databinding.FragmentDetailBinding;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -25,6 +26,7 @@ public class DetailFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     public DetailFragment() {
         // Required empty public constructor

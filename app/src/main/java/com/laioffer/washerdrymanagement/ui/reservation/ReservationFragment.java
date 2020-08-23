@@ -3,6 +3,7 @@ package com.laioffer.washerdrymanagement.ui.reservation;
 import android.os.Bundle;
 
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -36,6 +36,7 @@ public class ReservationFragment extends Fragment {
         ReservationFragment fragment = new ReservationFragment();
         fragment.setArguments(args);
         return fragment;
+
     }
 
 
@@ -102,6 +103,4 @@ public class ReservationFragment extends Fragment {
         });
 
     }
-
-
 }

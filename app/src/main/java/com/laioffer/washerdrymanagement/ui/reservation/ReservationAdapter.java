@@ -67,16 +67,33 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             newone.item_id = reservation.item_id;
             newone.model = reservation.model;
             newone.type = reservation.type;
-            Timestamp t = new Timestamp(System.currentTimeMillis());
-            String te = t.toString();
-            String[] array = te.split("\\.");
-            if (array[0].length() < 19) {
-                Log.d("aaaa", "error split");
-            }
-                newone.start_time = array[0];
+            processTime(newone);
             reservations.add(newone);
         }
         notifyDataSetChanged();
+
+    }
+    public void processTime(TemporaryType newone) {
+        Timestamp t = new Timestamp(System.currentTimeMillis());
+        String te = t.toString();
+        String[] array = te.split("\\.");
+        if (array[0].length() < 19) {
+            Log.d("aaaa", "error split");
+        }
+        Date startDate = null;
+        Date endDate = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            startDate = dateFormat.parse(array[0]);
+            endDate = dateFormat.parse(newone.end_time);
+        } catch (ParseException e) {
+        }
+        Timestamp startstamp = new Timestamp(startDate.getTime());
+        Timestamp endstamp = new Timestamp(endDate.getTime());
+        if (startstamp.equals(endstamp) || startstamp.after(endstamp)) {
+            startstamp = endstamp;
+        }
+        newone.start_time = startstamp.toString();
     }
     public void clear() {
         reservations.clear();
@@ -92,24 +109,31 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     @Override
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         TemporaryType cur = reservations.get(position);
-        Timestamp t = new Timestamp(System.currentTimeMillis());
-        String curtime = cur.start_time;
-//        curtime = curtime.substring(0, curtime.length() - 4);
-        holder.reservationTextView.setText( curtime+ "\n->\n" + cur.end_time);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         holder.reserveItemTextView.setText(cur.item_id);
         Date startDate = null;
         Date endDate = null;
         try {
-            startDate = dateFormat.parse(curtime);
+            startDate = dateFormat.parse(cur.start_time);
             endDate = dateFormat.parse(cur.end_time);
         } catch (ParseException e) {
         }
         if (startDate == null) {
-            Log.d("aaaa", curtime);
+            Log.d("aaaa", cur.start_time);
         }
         Timestamp startstamp = new Timestamp(startDate.getTime());
         Timestamp endstamp = new Timestamp(endDate.getTime());
+        long t = endstamp.getTime() - startstamp.getTime();
+        long min = t / (1000 * 60);
+        long sec = t / 1000 - min * 60;
+        holder.reserveItemTextView.setText(cur.item_id);
+        holder.reservationTextView.setText(min + " min,  " + sec + " sec");
+        if (selected.contains(position)) {
+            holder.cardView.setBackgroundColor(0x0fff0000);
+        }
+        else {
+            holder.cardView.setBackgroundColor(0xffffffff);
+        }
         if (startstamp.equals(endstamp) || startstamp.after(endstamp)) {
             holder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -167,13 +191,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             int size = reservations.size();
             for (int i = 0; i < size; i++) {
                 TemporaryType temp = reservations.get(i);
-                Timestamp t = new Timestamp(System.currentTimeMillis());
-                String te = t.toString();
-                String[] array = te.split("\\.");
-                if (array[0].length() < 19) {
-                    Log.d("aaaa", "error split");
-                }
-                temp.start_time = array[0];
+                processTime(temp);
                 reservations.set(i, temp);
             }
             Message message = mHandler.obtainMessage(1);
