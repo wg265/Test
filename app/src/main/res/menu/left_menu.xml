@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title = "Item"
+        android:icon="@drawable/ic_washing_machine_svgrepo_com"
+        android:id="@+id/Item"/>
+        <group android:id="@+id/item_group"
+            android:visible="false"
+            android:checkableBehavior="single">
+            <item android:id = "@+id/All"
+                android:title="All" />
+            <item android:id="@+id/Available"
+                android:title="Available" />
+            <item android:id="@+id/Reserved"
+                android:title="Reserved" />
+            <item android:id="@+id/Finished"
+                android:title="Finished" />
+            <item android:id="@+id/Damaged"
+                android:title="Damaged" />
+        </group>
+<!--    <item android:id="@+id/dryer_fragment"-->
+<!--        android:checked="false"-->
+<!--        android:icon = "@drawable/ic_drying_machine_svgrepo_com"-->
+<!--        android:title = "Dryer"/>-->
+    <item android:id="@+id/reservation_fragment"
+        android:checked = "false"
+        android:orderInCategory="2"
+        android:icon = "@drawable/ic_article_24px"
+        android:title = "Reservation"/>
+    <item
+        android:id="@+id/left_logout"
+        android:checked="false"
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_exit_to_app_black_18dp"
+        android:title="Logout"/>
+</menu>
