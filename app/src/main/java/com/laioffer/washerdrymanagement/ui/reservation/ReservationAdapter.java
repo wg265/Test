@@ -20,6 +20,8 @@ import com.laioffer.washerdrymanagement.database.Reservation;
 import com.laioffer.washerdrymanagement.database.TemporaryType;
 import com.laioffer.washerdrymanagement.databinding.ReservationElementLayoutBinding;
 
+import org.w3c.dom.Text;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,7 +41,8 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     public Timer timer;
     Set<ReservationViewHolder> set;
     private DataRepository repository;
-    public ReservationAdapter () {
+    public ReservationAdapter (DataRepository repository) {
+        this.repository = repository;
         myTask = new MyTask();
         timer = new Timer();
         mHandler = new Handler(Looper.getMainLooper()) {
@@ -58,6 +61,15 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     public void setReservation(List<Reservation> temp) {
         reservations.clear();
         selected.clear();
+        int i = 0;
+        while(i < temp.size()) {
+            if (temp.get(i).condition.equals("available") || temp.get(i).condition.equals("damaged")) {
+                temp.remove(i);
+            }
+            else {
+                i++;
+            }
+        }
         for (Reservation reservation : temp) {
             TemporaryType newone = new TemporaryType();
             newone.address = reservation.address;
@@ -70,6 +82,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             processTime(newone);
             reservations.add(newone);
         }
+
         notifyDataSetChanged();
 
     }
@@ -87,6 +100,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             startDate = dateFormat.parse(array[0]);
             endDate = dateFormat.parse(newone.end_time);
         } catch (ParseException e) {
+            e.printStackTrace();
         }
         Timestamp startstamp = new Timestamp(startDate.getTime());
         Timestamp endstamp = new Timestamp(endDate.getTime());
@@ -127,6 +141,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         long min = t / (1000 * 60);
         long sec = t / 1000 - min * 60;
         holder.reserveItemTextView.setText(cur.item_id);
+        holder.reserveTextView.setText(cur.condition);
         holder.reservationTextView.setText(min + " min,  " + sec + " sec");
         if (selected.contains(position)) {
             holder.cardView.setBackgroundColor(0x0fff0000);
@@ -154,14 +169,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     @Override
     public int getItemCount() {
         int i = 0;
-        while(i < reservations.size()) {
-            if (reservations.get(i).condition.equals("available")) {
-                reservations.remove(i);
-            }
-            else {
-                i++;
-            }
-        }
+
         return reservations.size();
     }
 
@@ -169,6 +177,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         ImageView reservationImageView;
         TextView reservationTextView;
         TextView reserverTextView;
+        TextView reserveTextView;
         TextView reserveItemTextView;
         ConstraintLayout cardView;
         public ReservationViewHolder(@NonNull View itemView) {
@@ -178,7 +187,8 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             reservationTextView = binding.reservationCardName;
             cardView = binding.selectableReservationCard;
             reserverTextView = binding.reserverText;
-            reserveItemTextView = binding.reserveText;
+            reserveItemTextView = binding.reserveItemText;
+            reserveTextView = binding.reserveText;
             reservationImageView.setImageResource(R.drawable.ic_event_24px);
         }
     }
@@ -192,6 +202,23 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             for (int i = 0; i < size; i++) {
                 TemporaryType temp = reservations.get(i);
                 processTime(temp);
+                Date startDate = null;
+                Date endDate = null;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                try {
+                    startDate = dateFormat.parse(temp.start_time);
+                    endDate = dateFormat.parse(temp.end_time);
+                } catch (ParseException e) {
+                }
+                if (startDate == null) {
+                    Log.d("aaaa", temp.start_time);
+                }
+                Timestamp startstamp = new Timestamp(startDate.getTime());
+                Timestamp endstamp = new Timestamp(endDate.getTime());
+                if ((startstamp.after(endstamp) || startstamp.equals(endstamp))&& temp.condition.equals("reserve")) {
+                    repository.finishReservaiton(temp.item_id);
+                    temp.condition = "finished";
+                }
                 reservations.set(i, temp);
             }
             Message message = mHandler.obtainMessage(1);

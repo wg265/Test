@@ -59,7 +59,7 @@ public class ReservationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         DataRepository repository = new DataRepository(getContext());
-        reservationAdapter = new ReservationAdapter();
+        reservationAdapter = new ReservationAdapter(repository);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 1);
         binding.reservationRecyclerView.setLayoutManager(gridLayoutManager);
         binding.reservationRecyclerView.setAdapter(reservationAdapter);
