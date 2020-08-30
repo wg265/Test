@@ -1,0 +1,2 @@
+rootProject.name='Washer&Dry Management'
+include ':app'
