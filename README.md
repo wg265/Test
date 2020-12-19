@@ -3,7 +3,7 @@
 ## All the code are in the Main.ipynb file. The data files are "TrainingData.csv" for training set and "ValidationData.csv" for validation set. 
 ## Please make sure Main.ipynb are data files are under the same directory.
 ## To run a jupyter notebook
-### 0. Install a jupyter notebook, see on
+### 0. Install a jupyter notebook, see on https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/install.html
 ### 1. Open a terminal window
 ### 2. In terminal, move to the path where Main.ipynb is contained.
 ### 3. Type jupyter notebook to launch jupyter notebook app.
