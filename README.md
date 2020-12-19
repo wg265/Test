@@ -1,7 +1,6 @@
 # Readme
 ## My submission is a .zip file. It contains a folder named 4800. Unzip it to a startup folder.
 ## All the code are in the Main.ipynb file. The data files are "TrainingData.csv" for training set and "ValidationData.csv" for validation set. 
-## The code can be directly run. 
 ## Please make sure Main.ipynb are data files are under the same directory.
 ## To run a jupyter notebook
 ### 0. Install a jupyter notebook, see on
