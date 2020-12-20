@@ -8,4 +8,4 @@
 ### 2. In terminal, move to the path where Main.ipynb is contained.
 ### 3. Type jupyter notebook to launch jupyter notebook app.
 ### 4. Run all the code cells of the jupyter notebook file.
-## The other .joblib files are model files. The training time make around 40-50 min.
+## The other .joblib files are model files. The training time may take around 40-50 min.
